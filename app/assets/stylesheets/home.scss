@@ -1,3 +1,115 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+html, body {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding-top: 0px;
+  padding-bottom: 20px;
+  background-color: white;
+}
+
+.navbar-static-top {
+}
+
+i {
+  font-size:16px;
+}
+
+.nav > li > a {
+  color:#787878;
+}
+  
+footer {
+  margin-top:20px;
+  padding-top:20px;
+  padding-bottom:20px;
+  background-color:#efefef;
+}
+
+/* count indicator near icons */
+.nav>li .count {
+  position: absolute;
+  bottom: 12px;
+  right: 6px;
+  font-size: 9px;
+  background: rgba(51,200,51,0.55);
+  color: rgba(255,255,255,0.9);
+  line-height: 1em;
+  padding: 2px 4px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.nav_top {
+  width: 100%;
+  height: 60px;
+  background-color: #273238;
+  position: fixed;
+  display: table;
+}
+
+.brand_name {
+  width: 20%;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 30px;
+  z-index: 100;
+  p {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 25px;
+    color: white;
+  }
+}
+
+.nav_blank {
+  display: table-cell;
+  vertical-align: middle;
+  width: 55%;
+}
+.user_menu {
+  right: 0px;
+  width: 25%;
+  display: table-cell;
+  vertical-align: middle;
+  p {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 20px;
+    color: white;
+  }
+}
+  
+
+.layout_container {
+  width: 100%;
+  height: 100%;
+}
+
+.left_menu {
+  height: 100%;
+  border-right: #ACACAC 2px solid;
+}
+
+.menu_container{
+  padding-top: 15px;
+}
+
+.menu_box {
+  width: 70%;
+  height: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  p {
+    font-size: 23px;
+    color: #4d4d4d;
+  }
+}
+
+.input_timeline {
+  width: 100%;
+  height: 20%;
+  border-bottom: #ACACAC 2px solid;
+}

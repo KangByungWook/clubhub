@@ -1,100 +1,20 @@
+<script>
+  $(function() {
+    $('#index_button').css("border","#8c8c8c 1px solid");
+  });   
+</script>
 
-    <!--로그인 하면 해당 소속되어있는 동아리의 웹페이지가 뜸-->
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Club HUB</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#" onmouseover="myFunction()">뉴스피드</a>
-                    </li>
-                    <li>
-                        <a href="#">My club</a>
-                    </li>
-                    
-                </ul>
-                <ul class="nav navbar-nav" style="float:right">
-                    <li>
-                        <a><%=current_user.name%>님</a>
-                    </li>
-                    
-                    <li>
-                        <a href="#">마이페이지</a>
-                    </li>
-                    <li>
-                        <a href="/users/sign_out">로그아웃</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+<div class="row">
+  <%for x in 1..10%>
+    <div class="col-sm-6 col-md-6">
+      <div class="thumbnail" style="height:<%=(3+rand(3))*100%>px;"> 
+        <img src="..." alt="...">
+        <div class="caption">
+          <h3>Thumbnail label</h3>
+          <p>...</p>
+          <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
         </div>
-        <!-- /.container -->
-    </nav>
-<div class = "row"  style="padding-top: 10px;">
-    <div class="col-md-8 col-md-offset-2" style="border:1px solid black">
-        <div class ="row">
-            <div class="col-md-12" style="border:1px solid black;height:175px;">
-            동아리 소개 및 이미지 부분
-            </div>
-            
-            <!--메뉴 부분-->
-            <div class="col-md-3" style="border:1px solid black"> 
-            메뉴 부분
-            </div>
-            
-            <!--입력및 게시물 부분-->
-            <div class="col-md-6" style="border:1px solid black"> 
-            <form action="/home/index_write" method="POST">
-            <div class="form-group">
-                <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="제목">
-            </div>
-                <textarea class="form-control" name="content" rows="3" placeholder="글쓰기"></textarea>
-                <button type="submit" class="btn btn-default" style="float:right">글쓰기</button>
-            </form><br><br><br><br>
-            <% @contents.each do |x| %>
-            <div class="panel panel-default" data-toggle="modal" data-target="#<%=x.id%>">
-              <div class="panel-heading">작성자:<%=x.author%></div>
-              <div class="panel-body">
-                <%=x.title%>
-              </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="<%=x.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><%=x.title%></h4>
-                  </div>
-                  <div class="modal-body">
-                    <%=x.content%>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <%end%>            
-            </div>
-            
-            <div class="col-md-3" style="border:1px solid black"> 
-            캘린더 부분
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="col-md-2" style="border:1px solid black">
-    뉴스피드 친구목록
-    </div>
+  <%end%>
 </div>

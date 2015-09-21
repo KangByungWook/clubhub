@@ -1,0 +1,7 @@
+<script>
+  var TestObject = Parse.Object.extend("new_table");
+  var testObject = new TestObject();
+  testObject.save({string: "draconian", number: 123}).then(function(object) {
+    alert("yay! it worked");
+  });
+</script>

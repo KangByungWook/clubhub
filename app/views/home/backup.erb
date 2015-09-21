@@ -1,0 +1,110 @@
+<script>
+$(".alert").addClass("in").fadeOut(4500);
+
+/* swap open/close side menu icons */
+$('[data-toggle=collapse]').click(function(){
+  	// toggle icon
+  	$(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
+});
+</script>
+
+    <!--로그인 하면 해당 소속되어있는 동아리의 웹페이지가 뜸-->
+    <!-- Navigation -->
+    
+<div class = "row"  style="padding-top: 10px;">
+    <div class="col-md-8 col-md-offset-2" style="border:1px solid black">
+        <div class ="row">
+            <!--메뉴 부분-->
+            <div class="col-md-3" style="border:1px solid black"> 
+              <!-- Left column -->
+            <a href="#"><strong><i class="glyphicon glyphicon-home"></i>  뉴스피드</strong></a>
+
+            <br>
+
+            <ul class="nav nav-stacked">
+                
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">게시판 <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <!--in은 페이지가 열렸을때 펼쳐졌는지 여부-->
+                    <ul class="nav nav-stacked collapse in" id="userMenu">
+                        <li class="active"> <a href="#"><i class="glyphicon glyphicon-globe"></i>&nbsp공지사항</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-pencil"></i>&nbsp자유 게시판</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp익명 게시판 </a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-inbox"></i>&nbsp자료실</a></li>
+                    </ul>
+                </li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2">갤러리<i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                    <ul class="nav nav-stacked collapse" id="menu2">
+                        <li><a href="#">&nbsp2015년 여름방학 엠티</a>
+                        </li>
+                        <li><a href="#">&nbsp2014년 겨울방학 엠티</a>
+                        </li>
+                        <li><a href="#">&nbsp에오스 회합</a>
+                        </li>
+                        <li><a href="#">&nbsp뒤풀이 사진</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu3">자료실<i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                    <ul class="nav nav-stacked collapse" id="menu3">
+                        <li><a href="#">&nbsp수업자료</a>
+                        </li>
+                        <li><a href="#">&nbsp족보</a>
+                        </li>
+                        <li><a href="#">&nbsp코드</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu4">투표</a><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </li>
+                
+            </ul>
+
+            
+            </div>
+            
+            <!--입력및 게시물 부분-->
+            <div class="col-md-9" style="border:1px solid black"> 
+            <form action="/home/index_write" method="POST">
+            <div class="form-group">
+                <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="제목">
+            </div>
+                <textarea class="form-control" name="content" rows="3" placeholder="글쓰기"></textarea>
+                <button type="submit" class="btn btn-default" style="float:right">글쓰기</button>
+            </form><br><br><br><br>
+            <% @contents.each do |x| %>
+            <div class="panel panel-default" data-toggle="modal" data-target="#<%=x.id%>">
+              <div class="panel-heading">작성자:<%=x.author%></div>
+              <div class="panel-body">
+                <%=x.title%>
+              </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="<%=x.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><%=x.title%></h4>
+                  </div>
+                  <div class="modal-body">
+                    <%=x.content%>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%end%>            
+            </div>
+            
+            
+        </div>
+    </div>
+    
+</div>
