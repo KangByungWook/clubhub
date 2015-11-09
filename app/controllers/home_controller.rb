@@ -1,9 +1,25 @@
 class HomeController < ApplicationController
-before_action :authenticate_user!, only: [:index, :index_write]
     
     def index
         @boardModel = Parse::Query.new("Board")
         @commentModel = Parse::Query.new("Comment")
+    end
+    
+    def do_write
+       createPost = Parse::Object.new("Board")
+       createPost["text"] = params[:boardContent]
+       createPost["name"] = "익명"
+        # #파일 업로드 해보기
+        # photo = Parse::File.new({
+        #   :body => "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwLI2OgwM-24Hy8yjx6oba09-aVJqN1BCqDOobKZPPZaFj21J4Eg",
+        #   :local_filename => "parsers.jpg",
+        #   :content_type => "image/jpeg"
+        # })
+        # photo.save
+        
+        # createPost["picture"] = photo
+        # #파일 업로드 끝
+       redirect_to :back
     end
     
     def do_reply
@@ -13,18 +29,6 @@ before_action :authenticate_user!, only: [:index, :index_write]
        createRow["boardID"] = params[:boardID]
        createRow.save
        redirect_to :back,  notice: "댓글이 등록되었습니다."
-    end
-    
-    def write_page
-        
-    end
-    def index_write
-       a=Article.new
-       a.author=current_user.name
-       a.title=params[:title]
-       a.content=params[:content]
-       a.save
-       redirect_to :back
     end
     
     def gallery

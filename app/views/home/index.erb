@@ -77,112 +77,157 @@
 </script>
 
 <h1># TimeLine
-  <a href="/home/write_page"><span style="float:right; font-size:2.5em;">Write</span></a>
+  <a href="/" data-toggle="modal" data-target="#getmodal"><span style="float:right; font-size:2.5em;">Write</span></a>
 </h1>
-<br>
-<div class="row marketing">
-<div class="container">
-  <%@boardModel.get.reverse.each do |x|%>
-  <div class="col-lg-5" style="margin-left:4.8em; margin-bottom:1em; background:#eee;">
-    <h4 style="font-weight:bold;"><%=x["text"]%></h4>
-    <p style="float:right; font-weight:bold;"><%=x["name"]%></p><br><br>
-    <p>
-      <span id="<%=x["objectId"]%>-drawer" style="font-size:1em; cursor:pointer;">+ comment</span>
-      <span><%=@commentModel.get.count{|r| r["boardID"] == x["objectId"]}%></span>
-      <span style="float:right; font-size:1em;"><%=x["createdAt"].in_time_zone("Seoul").strftime("%Y년 %m월 %d일  %I:%M")%></span>
-    </p>
-    <div id="<%=x["objectId"]%>-comment" style="display:none;">
-      <form action="/home/do_reply" method="POST">
-          <input type="text" id="<%=x["objectId"]%>-newcomment" name="replyContent" style="width:80%; height:1.5em;" placeholder="New Comment">
-          <input type="hidden" name="boardID" value="<%=x["objectId"]%>">
-          <button id="<%=x["objectId"]%>-submit" style="margin-left:1.5em; height:1.5em;">Submit</button>
-      </form>
-      <%@commentModel.get.each do |y|%>
-       <%if (x["objectId"] == y["boardID"])%>
-          <p><%=y["text"]%><span style="float:right"><%=y["commenter"]%></span></p>
-        <%end%>
-      <%end%>
-      
+<div class="modal fade" id="getmodal" tabindex="-1" role="dialog">
+  <br><br>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>EOS | 글 작성하기</h1>
+      </div>
+      <div class="modal-body">
+        <form action="/home/do_write" method="POST">
+          <textarea class="form-control" rows="3"  id="boardContent"></textarea>
+          <button type="submit" class="btn btn-default" style="float:right" id = "submitBtn">Submit</button>
+          <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="PhotoUpload">
+            <p class="help-block">Example block-level help text here.</p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-  
-  <script>
-    $(function() {
-      $('#<%=x["objectId"]%>-drawer').click(function() {
-        $(this).html() == "- comment" ? $(this).html('+ comment') : $(this).html('- comment');
-        $('#<%=x["objectId"]%>-comment').toggle();
-      });
-    });
-  </script>
-  <script>
-    $(function() {
-      $('#<%=x["objectId"]%>-submit').click(function() {
-        
-      });
-    });
-  </script>
-  <%end%>
 </div>
-</div>
-
-<div id="board">
-  
-</div>
-
-<%if user_signed_in?%>
-<%else%>
-   <div class="materialContainer">
-   <%= form_for(:user, :url => session_path(:user), html: { class: "box" }) do |f| %>
-   <div class="title">Login</div>
-     <div class="input">
-        <%= f.label :email, for: "name" %>
-        <%= f.text_field :email, id: "name" %>
-        <span class="spin"></span>
-     </div>
-     
-     <div class="input">
-        <%= f.label :password, for: "pass" %>
-        <%= f.password_field :password, id: "pass" %>
-        <span class="spin"></span>
-     </div>
-     <div class="button login">
-        <button type="submit"><span>Go</span></button>
-        <i class="fa fa-check"></i>
-     </div>
-        <%= link_to "Forgot your password?", new_password_path(:user),class: "pass-forgot" %>
-     
-   <% end %>
-   
-   
-   <%= form_for(:user, :url => registration_path(:user), html: { class: "overbox"}) do |f| %>
-   <div class="material-button alt-2"><span class="shape"></span></div>
-   <div class="title">REGISTER</div>
-      <div class="input">
-        <%= f.label :email, for: "regname" %>     
-        <%= f.text_field :email, id: "regname" %>
-        <span class="spin"></span>
-     </div>
-     <div class="input">
-        <%= f.label :password, for: "regpass" %> 
-        <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
-        <%= f.password_field :password, id: "regpass", autocomplete: "off" %>
-        <span class="spin"></span>
-     </div>
-     <div class="input">
-       <%= f.label :password_confirmation, for: "rerepass" %>
-       <%= f.password_field :password_confirmation, autocomplete: "off", id: "rerepass" %>
-       <span class="spin"></span>
-     </div>
-     <div class="button">
-        <button type="submit"><span>NEXT</span></button>
-     </div>
-     
-   <% end %>
-   </div>
-<%end%>
 <script>
+$("#submitBtn").click(function() {
+  var fileUploadControl = $("#PhotoUpload")[0];
+  if (fileUploadControl.files.length > 0) {
   
+  var file = fileUploadControl.files[0];
+  var name = "photo.jpg";
+  var parseFile = new Parse.File(name, file);
+  parseFile.save();
+  
+  var authorSearch = Parse.Object.extend("User");
+  var query = new Parse.Query(authorSearch);
+  var userId = $("#hidden_objectid").val().toString();
+  var findAuthor;
+  
+  var boardContent = $("#boardContent").val().toString();
+  alert(boardContent);
+  var createBoard = new Parse.Object("Board");
+  createBoard.set("text", boardContent);
+  alert("글 저장 완료");
+  query.get(userId, {
+    success: function(result) {
+      findAuthor = result.get("realname");
+      createBoard.set("name", findAuthor);
+      alert("글쓴이 저장 완료");
+    },
+    error: function(object, error) {
+      alert("이름 가져오기 실패ㅠㅠ")
+    }
+  });  
+  createBoard.set("writerID", userId);
+  alert("업로드 성공!!");
+  createBoard.set("picture", parseFile);
+  createBoard.save();
+  //게시판 저장 완료
+  
+  
+  var addGallery = new Parse.Object("Photo");
+  addGallery.set("photo", parseFile);
+  addGallery.save();
+  //갤러리에도 저장
+  
+}
+else{
+  var authorSearch = Parse.Object.extend("User");
+  var query = new Parse.Query(authorSearch);
+  var userId = $("#hidden_objectid").val().toString();
+  var findAuthor;
+  
+  var boardContent = $("#boardContent").val().toString();
+  alert(boardContent);
+  var createBoard = new Parse.Object("Board");
+  createBoard.set("text", boardContent);
+  alert("글 저장 완료");
+  query.get(userId, {
+    success: function(result) {
+      findAuthor = result.get("realname");
+      createBoard.set("name", findAuthor);
+      alert("글쓴이 저장 완료");
+    },
+    error: function(object, error) {
+      alert("이름 가져오기 실패ㅠㅠ")
+    }
+  });  
+  createBoard.set("writerID", userId);
+  alert("업로드 성공!!");
+  createBoard.save();
+  //게시판 저장 완료
+} 
+ 
+  
+  
+  
+});
+
+
   
 </script>
+<br>
+<div class="row marketing">
+  <div class="container">
+    <% @boardModel.get.reverse.each do |x|%>
+    <div class="col-lg-5" style="margin-left:4.8em; margin-bottom:1em; background:#eee;">
+      <h4 style="font-weight:bold;"><%=x["text"]%></h4>
+      <p style="float:right; font-weight:bold;"><%=x["name"]%></p><br><br>
+      <p>
+        <span id="<%=x["objectId"]%>-drawer" style="font-size:1em; cursor:pointer;">+ comment</span>
+        <span><%=@commentModel.get.count{|r| r["boardID"] == x["objectId"]}%></span>
+        <%if x["picture"].nil?%>
+        <%else%>
+          <img src="<%=x["picture"].url%>">
+        <%end%>
+        <span style="float:right; font-size:1em;"><%=x["createdAt"].in_time_zone("Seoul").strftime("%Y년 %m월 %d일  %I:%M")%></span>
+      </p>
+      <div id="<%=x["objectId"]%>-comment" style="display:none;">
+        <form action="/home/do_reply" method="POST">
+            <input type="text" id="<%=x["objectId"]%>-newcomment" name="replyContent" style="width:80%; height:1.5em;" placeholder="New Comment">
+            <input type="hidden" name="boardID" value="<%=x["objectId"]%>">
+            <button id="<%=x["objectId"]%>-submit" style="margin-left:1.5em; height:1.5em;">Submit</button>
+        </form>
+        <%@commentModel.get.each do |y|%>
+         <%if (x["objectId"] == y["boardID"])%>
+            <p><%=y["text"]%><span style="float:right"><%=y["commenter"]%></span></p>
+          <%end%>
+        <%end%>
+        
+      </div>
+    </div>
+    
+    <script>
+      $(function() {
+        $('#<%=x["objectId"]%>-drawer').click(function() {
+          $(this).html() == "- comment" ? $(this).html('+ comment') : $(this).html('- comment');
+          $('#<%=x["objectId"]%>-comment').toggle();
+        });
+      });
+    </script>
+    <script>
+      $(function() {
+        $('#<%=x["objectId"]%>-submit').click(function() {
+          
+        });
+      });
+    </script>
+    <%end%>
+    
+  </div>
+</div>

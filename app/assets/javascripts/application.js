@@ -12,5 +12,27 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+
+//= require jquery-ui/accordion
+//= require jquery-ui/autocomplete
+//= require jquery-ui/button
+//= require jquery-ui/datepicker
+//= require jquery-ui/dialog
+//= require jquery-ui/menu
+//= require jquery-ui/progressbar
+//= require jquery-ui/selectmenu
+//= require jquery-ui/slider
+//= require jquery-ui/spinner
+//= require jquery-ui/tabs
+//= require jquery-ui/tooltip
+
 //= require turbolinks
 //= require_tree .
+
+document.addEventListener('page:before-change', function() {
+    document.getElementById("loading").className += "loading";
+});
+document.addEventListener('page:before-unload', function() {
+   document.getElementById("loading").className = ' ';
+});

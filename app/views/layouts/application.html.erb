@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Workspace</title>
-    
+  <title>ClubHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+ 
   <script src="//www.parsecdn.com/js/parse-1.6.2.min.js"></script>
+  <script>Parse.initialize("GHJU9uf4dI8t0ZNGrfev4paGPGbK2jUF101A3FvL", "0HgcOsetHKtpLOOxApSvoMCi7TkT7jHmWcwUSWIf");</script>
+
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <link href="jumbotron-narrow.css" rel="stylesheet">
   
   
@@ -24,6 +30,32 @@
 
 <body>
 
+<script>
+  $(function() {
+    var currentUser = Parse.User.current();
+    if (currentUser) {
+        // do stuff with the user
+        console.log(currentUser);
+        var GameScore = Parse.Object.extend("User");
+        var query = new Parse.Query(GameScore);
+        query.get(currentUser.id, {
+          success: function(object) {
+            console.log(object);
+            $('#hidden_objectid').val(object.id);
+          },
+          error: function(object, error) {
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });
+    } else {
+        // show the signup or login page
+        location.href = "/home/main";
+    }
+  });
+</script>
+<input id="hidden_objectid" type="hidde">
+
+<div id="loading"></div>
 <div class="container">
   <div class="header clearfix">
     <nav>

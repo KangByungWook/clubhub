@@ -1,0 +1,37 @@
+<div class="jumbotron">
+  <center>
+    <h1>EOS ClubHub</h1>
+    <h3>Log In</h3>
+    <br>
+    Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
+    Password : <input id="password" type="password" placeholder="password"><br><br>
+    <button id="login_btn">Log In</button>
+    <br><br>
+    <a href="/home/signup">Do not have ID? ... Go to Sign Up page</a>
+  </center>
+</div>
+
+<script>
+  var test = {'a': 123, 'b': 456, 'c':789};
+  console.log(test.a);
+</script>
+
+<script>
+  $(function() {
+    $('#login_btn').click(function() {
+      var username = $('#username').val();
+      var password = $('#password').val();
+      
+      Parse.User.logIn(username, password, {
+        success: function(user) {
+          // Do stuff after successful login.
+          location.href = "/home/index";
+        },
+        error: function(user, error) {
+          // The login failed. Check error to see why.
+          alert("Check ID or Password!!");
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,45 @@
+<div class="jumbotron">
+  <center>
+    <h1>EOS ClubHub</h1>
+    <h3>Sign Up</h3><br>
+    Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
+    Password : <input id="password" type="password" placeholder="password"><br><br>
+    Email : <input id="email" type="text" placeholder="Email"><br><br>
+    Real Name : <input id="realname" type="text" placeholder="RealName"><br><br>
+    Phone Number : <input id="phonenumber" type="text" placeholder="PhoneNumber"><br><br>
+    Date of Birth : <input id="ssn" type="text" placeholder="DateofBirth"><br><br>
+    <button id="signup_btn">Sign Up</button>
+  </center>
+</div>
+
+<script>
+  $(function() {
+    $('#signup_btn').click(function() {
+      var username = $('#username').val();
+      var password = $('#password').val();
+      var email = $('#email').val();
+      var realname = $('#realname').val();
+      var phonenumber = $('#phonenumber').val();
+      var ssn = $('#ssn').val();
+      
+      var user = new Parse.User();
+      user.set("username", username);
+      user.set("password", password);
+      user.set("email", email);
+      user.set("realname", realname);
+      user.set("phonenumber", phonenumber);
+      user.set("ssn", ssn);
+      
+      user.signUp(null, {
+        success: function(user) {
+          alert("Sign Up Success!!");
+          location.href = "/home/main";
+        },
+        error: function(user, error) {
+          // Show the error message somewhere and let the user try again.
+          alert("Error: " + error.code + " " + error.message);
+        }
+      });
+    });
+  });
+</script>

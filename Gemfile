@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
+gem 'will_paginate', '~> 3.0.6'
 gem "parse-ruby-client"
 gem 'devise'
+gem 'jquery-ui-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
