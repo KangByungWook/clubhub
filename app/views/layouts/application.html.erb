@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Workspace</title>
-  
+    
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -10,115 +10,41 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="//www.parsecdn.com/js/parse-1.6.2.min.js"></script>
-  <script>
-    Parse.initialize("rlhXJFlB2lVniWw16BscdvrF3abIzqTQituqY6Sl", "GWlgBAwW0uP9xAQ7a7knssqOI3DbNxGDpsAtQVjt");
-  </script>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="jumbotron-narrow.css" rel="stylesheet">
+  
+  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 
 <body>
-  <nav class="nav_top">
-    <div class="brand_name">
-      <center>
-        <p>Club HUB</p>
-      </cetner>
-    </div>
-    <div class="nav_blank">
-    </div>
-    <div class="user_menu">
-      <% if user_signed_in? %>
-        <center>
-          <p style="font-size:17px;">
-            <span id="user_email" style=""><%=current_user.email%></span>
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            <span id="signout" style="cursor:pointer;" onclick="location.href='/users/sign_out'">Logout</span>
-          </p>
-        </center>
-      <% else %>
-        <center>
-          <p>
-            <span id="signin" style="cursor:pointer;" onclick="location.href='/users/sign_in'">Sign In</span>
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            <span id="signup" style="cursor:pointer;" onclick="location.href='/users/sign_up'">Sign Up</span>
-          </p>
-        </center>
-      <% end %>
-    </div>
-  </nav>
-  <div class="row" style="height:100%; padding-top:80px; margin:0px; z-index:1;">
-    <div class="col-md-3" style="height:100%;">
-      <div class="layout_container">
-        <div class="left_menu">
-          <center class="menu_container">
-            <div class="menu_box" style="cursor: pointer;" onclick="location.href='/home/index'">
-              <p id="index_button" class="menu_button">타임라인</p>
-            </div>
-            <div class="menu_box" style="cursor: pointer;" onclick="location.href='/home/board'">
-              <p id="board_button" class="menu_button">게시판</p>
-            </div>
-            <div class="menu_box" style="cursor: pointer;" onclick="location.href='/home/files'">
-              <p id="files_button" class="menu_button">자료실</p>
-            </div>
-            <div class="menu_box" style="cursor: pointer;" onclick="location.href='/home/gallery'">
-              <p id="gallery_button" class="menu_button">앨범</p>
-            </div>
-            <div class="menu_box" style="cursor: pointer;" onclick="location.href='/home/voting'">
-              <p id="voting_button" class="menu_button">투표</p>
-            </div>
-            <div class="menu_box">
-              <p class="menu_button">??</p>
-            </div>
-          </center>
-        </div>
-      </div>
-    </div>
-    <script>
-      $(function() {
-        $(".menu_button").mouseover(function() {
-          $(this).css("background-color","#d8d8d8");
-        });
-        $(".menu_button").mouseout(function() {
-          $(this).css("background-color","white");
-        });
-        $("#signout").mouseover(function() {
-          $(this).css("background-color","white");
-          $(this).css("color","black");
-        });
-        $("#signout").mouseout(function() {
-          $(this).css("background-color","");
-          $(this).css("color","white");
-        });
-        $("#user_email").mouseover(function() {
-          $(this).css("background-color","white");
-          $(this).css("color","black");
-        });
-        $("#user_email").mouseout(function() {
-          $(this).css("background-color","");
-          $(this).css("color","white");
-        });
-        $("#signin").mouseover(function() {
-          $(this).css("background-color","white");
-          $(this).css("color","black");
-        });
-        $("#signin").mouseout(function() {
-          $(this).css("background-color","");
-          $(this).css("color","white");
-        });
-        $("#signup").mouseover(function() {
-          $(this).css("background-color","white");
-          $(this).css("color","black");
-        });
-        $("#signup").mouseout(function() {
-          $(this).css("background-color","");
-          $(this).css("color","white");
-        });
-      });
-    </script>
-    <div class="col-md-9" style="overflow:auto;height:100%;padding:0px;padding-right:15px;">
-      <%= yield %>
-    </div>
+
+<div class="container">
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right" style="margin-top:1em;">
+        <li id="main_pill" role="presentation"><a href="/">Main / TimeLine</a></li>
+        <li id="album_pill" role="presentation"><a href="/home/gallery">ALBUM</a></li>
+        <li id="vote_pill" role="presentation"><a href="/home/voting">VOTE</a></li>
+        <li id="att_pill" role="presentation"><a href="/home/attendance">Attendance</a></li>
+      </ul>
+    </nav>
+    <a href="/" style="text-decoration:none;"><h3 class="">EOS ClubHub</h3></a>
   </div>
+  <br>
+
+  <%= yield %>
+  
+  <footer class="footer">
+    <a href="/" >&copy; EOS 2015</a>
+  </footer>
+
+</div> <!-- /container -->
+
 </body>
 </html>

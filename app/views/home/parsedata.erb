@@ -1,7 +1,17 @@
 <script>
-  var TestObject = Parse.Object.extend("new_table");
-  var testObject = new TestObject();
-  testObject.save({string: "draconian", number: 123}).then(function(object) {
-    alert("yay! it worked");
+  $(function() {
+    $("#send_button").click(function() {
+      var TestObject = Parse.Object.extend("new_table");
+      var testObject = new TestObject();
+      var a = $("#str").val();
+      var b = $("#num").val();
+      testObject.save({str: a, num: b}).then(function(object) {
+        alert("yay! it worked");
+      });
+    });
   });
 </script>
+
+<input id="str" type="text" placeholder="str" value="">
+<input id="num" type="number" placeholer="num" value="">
+<button id="send_button">send_button</button>

@@ -1,20 +1,188 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="../dist/css/swiper.min.css">
+
+<!-- swiper -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/css/swiper.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/js/swiper.jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.7/js/swiper.jquery.min.js"></script>
+<link rel="stylesheet" href="path/to/swiper.min.css">
+<script src="path/to/jquery.js"></script>
+<script src="path/to/swiper.jquery.min.js"></script>
+<!-- swiper end -->
+<style>
+.swiper-container {
+    width: 100%;
+    height: 300px;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    width: 60%;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+</style>
+
 <script>
   $(function() {
-    $('#index_button').css("border","#8c8c8c 1px solid");
-  });   
+    $('#main_pill').toggleClass('active');
+  });
 </script>
 
-<div class="row">
-  <%for x in 1..10%>
-    <div class="col-sm-6 col-md-6">
-      <div class="thumbnail" style="height:<%=(3+rand(3))*100%>px;"> 
-        <img src="..." alt="...">
-        <div class="caption">
-          <h3>Thumbnail label</h3>
-          <p>...</p>
-          <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-        </div>
+<div class="jumbotron">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="http://cfile29.uf.tistory.com/image/2735393A563D99AD054F40" />
       </div>
+      <div class="swiper-slide">
+        <img src="http://cfile5.uf.tistory.com/image/2366883A563D99B302EF23" />
+      </div>
+      <div class="swiper-slide">Slide 3</div>
+      <div class="swiper-slide">Slide 4</div>
+      <div class="swiper-slide">Slide 5</div>
+      <div class="swiper-slide">Slide 6</div>
     </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper('.swiper-container', {
+    speed: 700,
+    pagination: '.swiper-pagination',
+    paginationClickable: true,
+    loop: true,
+    autoplay: 3000
+  });
+</script>
+
+<h1># TimeLine
+  <a href="/home/write_page"><span style="float:right; font-size:2.5em;">Write</span></a>
+</h1>
+<br>
+<div class="row marketing">
+<div class="container">
+  <%@boardModel.get.reverse.each do |x|%>
+  <div class="col-lg-5" style="margin-left:4.8em; margin-bottom:1em; background:#eee;">
+    <h4 style="font-weight:bold;"><%=x["text"]%></h4>
+    <p style="float:right; font-weight:bold;"><%=x["name"]%></p><br><br>
+    <p>
+      <span id="<%=x["objectId"]%>-drawer" style="font-size:1em; cursor:pointer;">+ comment</span>
+      <span><%=@commentModel.get.count{|r| r["boardID"] == x["objectId"]}%></span>
+      <span style="float:right; font-size:1em;"><%=x["createdAt"].in_time_zone("Seoul").strftime("%Y년 %m월 %d일  %I:%M")%></span>
+    </p>
+    <div id="<%=x["objectId"]%>-comment" style="display:none;">
+      <form action="/home/do_reply" method="POST">
+          <input type="text" id="<%=x["objectId"]%>-newcomment" name="replyContent" style="width:80%; height:1.5em;" placeholder="New Comment">
+          <input type="hidden" name="boardID" value="<%=x["objectId"]%>">
+          <button id="<%=x["objectId"]%>-submit" style="margin-left:1.5em; height:1.5em;">Submit</button>
+      </form>
+      <%@commentModel.get.each do |y|%>
+       <%if (x["objectId"] == y["boardID"])%>
+          <p><%=y["text"]%><span style="float:right"><%=y["commenter"]%></span></p>
+        <%end%>
+      <%end%>
+      
+    </div>
+  </div>
+  
+  <script>
+    $(function() {
+      $('#<%=x["objectId"]%>-drawer').click(function() {
+        $(this).html() == "- comment" ? $(this).html('+ comment') : $(this).html('- comment');
+        $('#<%=x["objectId"]%>-comment').toggle();
+      });
+    });
+  </script>
+  <script>
+    $(function() {
+      $('#<%=x["objectId"]%>-submit').click(function() {
+        
+      });
+    });
+  </script>
   <%end%>
 </div>
+</div>
+
+<div id="board">
+  
+</div>
+
+<%if user_signed_in?%>
+<%else%>
+   <div class="materialContainer">
+   <%= form_for(:user, :url => session_path(:user), html: { class: "box" }) do |f| %>
+   <div class="title">Login</div>
+     <div class="input">
+        <%= f.label :email, for: "name" %>
+        <%= f.text_field :email, id: "name" %>
+        <span class="spin"></span>
+     </div>
+     
+     <div class="input">
+        <%= f.label :password, for: "pass" %>
+        <%= f.password_field :password, id: "pass" %>
+        <span class="spin"></span>
+     </div>
+     <div class="button login">
+        <button type="submit"><span>Go</span></button>
+        <i class="fa fa-check"></i>
+     </div>
+        <%= link_to "Forgot your password?", new_password_path(:user),class: "pass-forgot" %>
+     
+   <% end %>
+   
+   
+   <%= form_for(:user, :url => registration_path(:user), html: { class: "overbox"}) do |f| %>
+   <div class="material-button alt-2"><span class="shape"></span></div>
+   <div class="title">REGISTER</div>
+      <div class="input">
+        <%= f.label :email, for: "regname" %>     
+        <%= f.text_field :email, id: "regname" %>
+        <span class="spin"></span>
+     </div>
+     <div class="input">
+        <%= f.label :password, for: "regpass" %> 
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+        <%= f.password_field :password, id: "regpass", autocomplete: "off" %>
+        <span class="spin"></span>
+     </div>
+     <div class="input">
+       <%= f.label :password_confirmation, for: "rerepass" %>
+       <%= f.password_field :password_confirmation, autocomplete: "off", id: "rerepass" %>
+       <span class="spin"></span>
+     </div>
+     <div class="button">
+        <button type="submit"><span>NEXT</span></button>
+     </div>
+     
+   <% end %>
+   </div>
+<%end%>
+<script>
+  
+  
+</script>

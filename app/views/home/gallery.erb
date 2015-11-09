@@ -1,7 +1,20 @@
 <script>
   $(function() {
-    $('#gallery_button').css("border","#8c8c8c 1px solid");
-  });   
+    $('#album_pill').toggleClass('active');
+  });
 </script>
 
-<h1>앨범</h1>
+<h1># Album
+  <a href=""><span style="float:right; font-size:2.5em;">Upload</span></a>
+</h1>
+<br>
+
+<div class="row">
+  <% @photoModel.get.reverse.each do |x| %>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="<%=x["photo"].url%>">
+      </div>
+    </div>
+  <% end %>
+</div>

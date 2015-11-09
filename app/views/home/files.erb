@@ -4,4 +4,51 @@
   });   
 </script>
 
+<script>
+  $(function() {
+    $("#loadid").click(function() {
+      var new_table = Parse.Object.extend("new_table");
+      var query = new Parse.Query(new_table);
+      var objectid;
+      query.equalTo("str", "draconian");
+      query.find({
+        success: function(results) {
+          alert("Successfully retrieved");
+          objectid = results[0].get("str");
+          $("#hidden_input").val(objectid);
+        },
+        error: function(error) {
+          alert("Error: " + error.code + " " + error.message);
+        }
+      });
+    });
+  });
+</script>
+<script>
+  $(function() {
+    $("#savestr").click(function() {
+      var new_table = Parse.Object.extend("new_table");
+      var savedid = $("hidden_input").val();
+      var query = new Parse.Query(new_table);
+      query.get(savedid, {
+      success: function(gameScore) {
+        // The object was retrieved successfully.
+        var name = gameScore.get("str");
+        var num = gameScore.get("num");
+        alert(name);
+        alert(num);
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and description.
+        alert("error");
+        }
+      });
+    });
+  });
+</script>
 <h1>자료실</h1>
+<button id="loadid">loadid</button>
+<input id="hidden_input" type="text" value="">
+<button id="savestr">savestr</button>
+<p id="strcontainer"></p>
