@@ -1,37 +1,65 @@
-<div class="jumbotron">
-  <center>
-    <h1>EOS ClubHub</h1>
-    <h3>Log In</h3>
-    <br>
-    Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
-    Password : <input id="password" type="password" placeholder="password"><br><br>
-    <button id="login_btn">Log In</button>
-    <br><br>
-    <a href="/home/signup">Do not have ID? ... Go to Sign Up page</a>
-  </center>
-</div>
-
-<script>
-  var test = {'a': 123, 'b': 456, 'c':789};
-  console.log(test.a);
-</script>
-
-<script>
-  $(function() {
-    $('#login_btn').click(function() {
-      var username = $('#username').val();
-      var password = $('#password').val();
-      
-      Parse.User.logIn(username, password, {
-        success: function(user) {
-          // Do stuff after successful login.
-          location.href = "/home/index";
-        },
-        error: function(user, error) {
-          // The login failed. Check error to see why.
-          alert("Check ID or Password!!");
-        }
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ClubHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+   
+    <script src="//www.parsecdn.com/js/parse-1.6.2.min.js"></script>
+    <script>Parse.initialize("GHJU9uf4dI8t0ZNGrfev4paGPGbK2jUF101A3FvL", "0HgcOsetHKtpLOOxApSvoMCi7TkT7jHmWcwUSWIf");</script>
+  
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+    
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  
+  <body>
+    <div class="jumbotron">
+      <center>
+        <h1>EOS ClubHub</h1>
+        <h3>Log In</h3>
+        <br>
+        Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
+        Password : <input id="password" type="password" placeholder="password"><br><br>
+        <button id="login_btn">Log In</button>
+        <br><br>
+        <a href="/home/signup">Do not have ID? ... Go to Sign Up page</a>
+      </center>
+    </div>
+    
+    <script>
+      $(function() {
+        $('#login_btn').click(function() {
+          var username = $('#username').val();
+          var password = $('#password').val();
+          
+          Parse.User.logIn(username, password, {
+            success: function(user) {
+              // Do stuff after successful login.
+              location.href = "/home/index";
+            },
+            error: function(user, error) {
+              // The login failed. Check error to see why.
+              alert("Check ID or Password!!");
+            }
+          });
+        });
       });
-    });
-  });
-</script>
+    </script>
+  </body>
+</html>

@@ -6,8 +6,8 @@
 
 <script>
 $(function() {
-  $( "#accordion" ).accordion();
-});
+    $( "#accordion" ).accordion();
+  });
 </script>
 
 <h1># Vote
@@ -96,6 +96,10 @@ dt {
 }
 .percentage:hover:after, .percentage:focus:after {
   background-color: #aaa;
+}
+
+.percentage-0:after {
+  width: 0.1%;
 }
 
 .percentage-1:after {
@@ -506,34 +510,61 @@ html, body {
 </style>
 
 <div id="accordion">
-  <h3>투표 제목</h3>
-  <div>
-    <dl>
-      <dt>
-        Browser market share June 2015
-      </dt>
-      <dd class="percentage percentage-11"><span class="text">option1</span></dd>
-      <dd class="percentage percentage-49"><span class="text">option2</span></dd>
-      <dd class="percentage percentage-16"><span class="text">option3</span></dd>
-    </dl>
-  </div>
-  <h3>투표 제목</h3>
-  <div>
-    <dl>
-      <dt>
-        Browser market share June 2015
-      </dt>
-      <dd class="percentage percentage-11"><span class="text">option1</span></dd>
-      <dd class="percentage percentage-49"><span class="text">option2</span></dd>
-    </dl>
-  </div>
-  <h3>투표 제목</h3>
-  <div>
-    <dl>
-      <dt>
-        Browser market share June 2015
-      </dt>
-      <dd class="percentage percentage-11"><span class="text">option1</span></dd>
-    </dl>
-  </div>
+  <%@voteModel.get.each do |x|%>
+    <h3><%=x["theme"]%></h3>
+    <div>
+      <dl>
+        <dt>
+          <%=x["theme"]%>
+        </dt>
+        <%if x["options"].nil?%>
+        <%else%>
+          
+          <!--전체 참여수 계산-->
+          <% vote_sum = 0 %>
+          <%x["options"].each do |y|%>
+            <% option = y.pointer.parse_object_id.to_s%>
+            <% vote_sum += Parse::Query.new("Options").eq("objectId",option).get.first["count"] %>
+          <%end%>
+          
+          <!--참여가 하나도 없을 때에는 vote_sum을 1로 초기화-->
+          <% if vote_sum == 0%>
+            <% vote_sum = 1 %>
+          <% else %>
+          <%end%>
+          
+          <%x["options"].each do |y|%>
+            <% option = y.pointer.parse_object_id.to_s%>
+            <% vote = Parse::Query.new("Options").eq("objectId",option).get.first["count"] %>
+            <dd class="percentage percentage-<%=((vote.to_f / vote_sum.to_f)*100).round(0)%>"><span class="text"><%=Parse::Query.new("Options").eq("objectId",option).get.first["option"]%></span></dd>
+          <%end%>
+        <%end%>
+      </dl>
+    </div>
+  <%end%>
+  
+  
+  
+  
+  
+  
+  <!--<h3>투표 제목</h3>-->
+  <!--<div>-->
+  <!--  <dl>-->
+  <!--    <dt>-->
+  <!--      Browser market share June 2015-->
+  <!--    </dt>-->
+  <!--    <dd class="percentage percentage-11"><span class="text">option1</span></dd>-->
+  <!--    <dd class="percentage percentage-49"><span class="text">option2</span></dd>-->
+  <!--  </dl>-->
+  <!--</div>-->
+  <!--<h3>투표 제목</h3>-->
+  <!--<div>-->
+  <!--  <dl>-->
+  <!--    <dt>-->
+  <!--      Browser market share June 2015-->
+  <!--    </dt>-->
+  <!--    <dd class="percentage percentage-11"><span class="text">option1</span></dd>-->
+  <!--  </dl>-->
+  <!--</div>-->
 </div>

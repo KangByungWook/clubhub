@@ -9,12 +9,44 @@
 </h1>
 <br>
 
-<div class="row">
-  <% @photoModel.get.reverse.each do |x| %>
-    <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-        <img src="<%=x["photo"].url%>">
-      </div>
+
+
+<header>
+<% @photoModel.get.reverse.each do |x| %>
+    <div>
+      <img src="<%=x["photo"].url%>">
     </div>
-  <% end %>
-</div>
+<% end %>
+  <!-- images placed inside block elements to deal with a Firefox rendering bug affecting  scaled flexbox images -->
+</header>
+
+<style>
+  
+header { 
+  padding: .5vw;
+  font-size: 0;
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap; 
+  flex-flow: row wrap; 
+  display: -webkit-box;
+  display: flex;
+}
+header div { 
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto; 
+  width: 200px; 
+  margin: .5vw; 
+}
+header div img { 
+  width: 100%; 
+  height: auto; 
+}
+@media screen and (max-width: 400px) {
+  header div { margin: 0; }
+  header { padding: 0; }
+  
+}
+</style>

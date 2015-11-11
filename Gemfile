@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'wow-rails'
 gem 'will_paginate', '~> 3.0.6'
 gem "parse-ruby-client"
 gem 'devise'

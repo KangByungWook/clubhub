@@ -160,6 +160,7 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     will_paginate (3.0.7)
+    wow-rails (0.0.1)
 
 PLATFORMS
   ruby
@@ -181,3 +182,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   will_paginate (~> 3.0.6)
+  wow-rails

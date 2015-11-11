@@ -1,45 +1,78 @@
-<div class="jumbotron">
-  <center>
-    <h1>EOS ClubHub</h1>
-    <h3>Sign Up</h3><br>
-    Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
-    Password : <input id="password" type="password" placeholder="password"><br><br>
-    Email : <input id="email" type="text" placeholder="Email"><br><br>
-    Real Name : <input id="realname" type="text" placeholder="RealName"><br><br>
-    Phone Number : <input id="phonenumber" type="text" placeholder="PhoneNumber"><br><br>
-    Date of Birth : <input id="ssn" type="text" placeholder="DateofBirth"><br><br>
-    <button id="signup_btn">Sign Up</button>
-  </center>
-</div>
-
-<script>
-  $(function() {
-    $('#signup_btn').click(function() {
-      var username = $('#username').val();
-      var password = $('#password').val();
-      var email = $('#email').val();
-      var realname = $('#realname').val();
-      var phonenumber = $('#phonenumber').val();
-      var ssn = $('#ssn').val();
-      
-      var user = new Parse.User();
-      user.set("username", username);
-      user.set("password", password);
-      user.set("email", email);
-      user.set("realname", realname);
-      user.set("phonenumber", phonenumber);
-      user.set("ssn", ssn);
-      
-      user.signUp(null, {
-        success: function(user) {
-          alert("Sign Up Success!!");
-          location.href = "/home/main";
-        },
-        error: function(user, error) {
-          // Show the error message somewhere and let the user try again.
-          alert("Error: " + error.code + " " + error.message);
-        }
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ClubHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+   
+    <script src="//www.parsecdn.com/js/parse-1.6.2.min.js"></script>
+    <script>Parse.initialize("GHJU9uf4dI8t0ZNGrfev4paGPGbK2jUF101A3FvL", "0HgcOsetHKtpLOOxApSvoMCi7TkT7jHmWcwUSWIf");</script>
+  
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+    
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  
+  <body>
+    <div class="jumbotron">
+      <center>
+        <h1>EOS ClubHub</h1>
+        <h3>Sign Up</h3><br>
+        Student Number(ID) : <input id="username" type="text" placeholder="StudentNumber"><br><br>
+        Password : <input id="password" type="password" placeholder="password"><br><br>
+        Email : <input id="email" type="text" placeholder="Email"><br><br>
+        Real Name : <input id="realname" type="text" placeholder="RealName"><br><br>
+        Phone Number : <input id="phonenumber" type="text" placeholder="PhoneNumber"><br><br>
+        Date of Birth : <input id="ssn" type="text" placeholder="DateofBirth"><br><br>
+        <button id="signup_btn">Sign Up</button>
+      </center>
+    </div>
+    
+    <script>
+      $(function() {
+        $('#signup_btn').click(function() {
+          var username = $('#username').val();
+          var password = $('#password').val();
+          var email = $('#email').val();
+          var realname = $('#realname').val();
+          var phonenumber = $('#phonenumber').val();
+          var ssn = $('#ssn').val();
+          
+          var user = new Parse.User();
+          user.set("username", username);
+          user.set("password", password);
+          user.set("email", email);
+          user.set("realname", realname);
+          user.set("phonenumber", phonenumber);
+          user.set("ssn", ssn);
+          
+          user.signUp(null, {
+            success: function(user) {
+              alert("Sign Up Success!!");
+              location.href = "/home/main";
+            },
+            error: function(user, error) {
+              // Show the error message somewhere and let the user try again.
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
+        });
       });
-    });
-  });
-</script>
+    </script>
+  </body>
+</html>

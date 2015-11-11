@@ -3,6 +3,7 @@ class HomeController < ApplicationController
     def index
         @boardModel = Parse::Query.new("Board")
         @commentModel = Parse::Query.new("Comment")
+        @galleryModel = Parse::Query.new("Photo")
     end
     
     def do_write
@@ -25,7 +26,7 @@ class HomeController < ApplicationController
     def do_reply
        createRow = Parse::Object.new("Comment")
        createRow["text"] = params[:replyContent]
-       createRow["commenter"] = "익명"
+       createRow["commenter"] = params[:reply_name]
        createRow["boardID"] = params[:boardID]
        createRow.save
        redirect_to :back,  notice: "댓글이 등록되었습니다."
@@ -35,7 +36,20 @@ class HomeController < ApplicationController
         @photoModel = Parse::Query.new("Photo")
     end
     
+    def voting
+        @voteModel = Parse::Query.new("Vote")
+        @optionModel = Parse::Query.new("Options")
+    end
+    
     def swipertest
+        render layout: false
+    end
+    
+    def main
+        render layout: false
+    end
+    
+    def signup
         render layout: false
     end
 end

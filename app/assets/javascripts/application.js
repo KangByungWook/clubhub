@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-
 //= require jquery-ui/accordion
 //= require jquery-ui/autocomplete
 //= require jquery-ui/button
@@ -26,7 +25,6 @@
 //= require jquery-ui/spinner
 //= require jquery-ui/tabs
 //= require jquery-ui/tooltip
-
 //= require turbolinks
 //= require_tree .
 
@@ -36,3 +34,4 @@ document.addEventListener('page:before-change', function() {
 document.addEventListener('page:before-unload', function() {
    document.getElementById("loading").className = ' ';
 });
+

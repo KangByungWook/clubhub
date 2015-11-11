@@ -32,19 +32,23 @@
 
 <script>
   $(function() {
+    var realname;
     var currentUser = Parse.User.current();
     if (currentUser) {
         // do stuff with the user
-        console.log(currentUser);
-        var GameScore = Parse.Object.extend("User");
-        var query = new Parse.Query(GameScore);
+        $('#logout_pill').show();
+        var UserTable = Parse.Object.extend("User");
+        var query = new Parse.Query(UserTable);
         query.get(currentUser.id, {
-          success: function(object) {
-            console.log(object);
-            $('#hidden_objectid').val(object.id);
+          success: function(user) {
+            // The object was retrieved successfully.
+            realname = user.get("realname");
+            $('#hidden_realname').val(realname);
           },
           error: function(object, error) {
-            alert("Error: " + error.code + " " + error.message);
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+            alert(error);
           }
         });
     } else {
@@ -53,17 +57,29 @@
     }
   });
 </script>
-<input id="hidden_objectid" type="hidde">
+
+<script>
+  $(function() {
+    $('#logout_pill').click(function() {
+        Parse.User.logOut();
+        alert("Log Out Complete!!");
+        location.href = "/home/main";
+    });
+  });
+</script>
+
+<input id="hidden_realname" type="hidden">
 
 <div id="loading"></div>
 <div class="container">
   <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right" style="margin-top:1em;">
-        <li id="main_pill" role="presentation"><a href="/">Main / TimeLine</a></li>
+        <li id="main_pill" role="presentation"><a href="/home/index">TimeLine</a></li>
         <li id="album_pill" role="presentation"><a href="/home/gallery">ALBUM</a></li>
         <li id="vote_pill" role="presentation"><a href="/home/voting">VOTE</a></li>
         <li id="att_pill" role="presentation"><a href="/home/attendance">Attendance</a></li>
+        <li id="logout_pill" role="presentation" style="display:none; margin-left:2em; cursor:pointer;"><a>Log Out</a></li>
       </ul>
     </nav>
     <a href="/" style="text-decoration:none;"><h3 class="">EOS ClubHub</h3></a>
